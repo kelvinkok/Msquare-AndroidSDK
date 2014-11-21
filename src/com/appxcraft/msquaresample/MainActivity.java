@@ -41,8 +41,9 @@ public class MainActivity extends Activity implements IBeaconConsumer,AdapterVie
         iBeaconManager.setForegroundBetweenScanPeriod(2000);
         iBeaconManager.setForegroundScanPeriod(1500);
 
-        // set APP ID available from msquare.io admin page
-        iBeaconManager.setAppID("88bb0d1f-7f0d-4a80-977f-b2ef9227aefd");
+        // set APP ID available from https://console.msquare.io admin page
+        // Please register an account and create an App to get an ID and apply the ID in the property below
+        iBeaconManager.setAppID("");
 
 
         adapter = new ListAdapter(this);
@@ -202,7 +203,7 @@ public class MainActivity extends Activity implements IBeaconConsumer,AdapterVie
         Entity beacon = (Entity) adapter.getItem(position);
 
         IBeacon ibeacon = new IBeacon(beacon.getMyValue01(),Integer.parseInt(beacon.getMyValue02()),Integer.parseInt(beacon.getMyValue03()),beacon.getAccuracy());
-
+        //Add Analytics Data
         iBeaconManager.addData(ibeacon, Consts.REPORTINGDATATYPE_DRILLDOWN);
 
         Bundle bundle = new Bundle();
@@ -219,6 +220,7 @@ public class MainActivity extends Activity implements IBeaconConsumer,AdapterVie
     @Override
     public void onDestroy()
     {
+        //Stop Scanning
         if(iBeaconManager!=null)
             iBeaconManager.unBind(this);
         super.onDestroy();
